@@ -1,11 +1,12 @@
 import React from 'react'
+import Approute from "./routes/AppRoutes";
 
 export default function App() {
   return (
     <>
-    <h1 className='text-2xl text-red-500'>heloo hiba</h1>
+   
+      <Approute/>
 
-    
     </>
   )
 }
