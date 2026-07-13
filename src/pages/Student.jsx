@@ -10,7 +10,6 @@ import {
   Phone,
   MapPin,
   GraduationCap,
-  BookOpen,
   Users,
   X,
   LoaderCircle
@@ -25,7 +24,6 @@ import {
 } from "../api/studentApi";
 
 import { getDepartments } from "../api/departmentApi";
-import { getCourses } from "../api/courseApi";
 
 
 const Student = () => {
@@ -33,7 +31,6 @@ const Student = () => {
 
 const [students,setStudents] = useState([]);
 const [departments,setDepartments] = useState([]);
-const [courses,setCourses] = useState([]);
 
 const [loading,setLoading] = useState(false);
 const [saving,setSaving] = useState(false);
@@ -59,8 +56,7 @@ age:"",
 address:"",
 phone:"",
 parentPhone:"",
-departmentId:"",
-courseId:""
+departmentId:""
 
 });
 
@@ -73,7 +69,6 @@ useEffect(()=>{
 
 loadStudents();
 loadDepartments();
-loadCourses();
 
 },[]);
 
@@ -123,32 +118,6 @@ setLoading(false);
 // ================= GET DEPARTMENT =================
 
 
-// const loadDepartments = async()=>{
-
-// try{
-
-// const res = await getDepartments();
-
-
-// setDepartments(
-
-// res?.data ||
-// res ||
-// []
-
-// );
-
-
-// }
-
-// catch(error){
-
-// console.log(error);
-
-// }
-
-// };
-
 const loadDepartments = async()=>{
 
 try{
@@ -162,39 +131,6 @@ setDepartments(
 );
 
 }
-catch(error){
-
-console.log(error);
-
-}
-
-};
-
-
-
-
-
-// ================= GET COURSES =================
-
-
-const loadCourses = async()=>{
-
-try{
-
-const res = await getCourses();
-
-
-setCourses(
-
-res?.data ||
-res ||
-[]
-
-);
-
-
-}
-
 catch(error){
 
 console.log(error);
@@ -244,8 +180,7 @@ age:"",
 address:"",
 phone:"",
 parentPhone:"",
-departmentId:"",
-courseId:""
+departmentId:""
 
 });
 
@@ -278,9 +213,7 @@ address:student.address,
 phone:student.phone,
 parentPhone:student.parentPhone,
 
-departmentId: student.departmentId || "",
-
-   courseId: student.courseId || ""
+departmentId: student.departmentId || ""
 
 });
 
@@ -305,8 +238,7 @@ const handleSubmit = async (e) => {
     !form.gender ||
     !form.age ||
     !form.phone ||
-    !form.departmentId ||
-    !form.courseId
+    !form.departmentId
   ) {
     Swal.fire(
       "Warning",
@@ -326,7 +258,6 @@ const handleSubmit = async (e) => {
     phone: form.phone,
     parentPhone: form.parentPhone,
     departmentId: Number(form.departmentId),
-    courseId: Number(form.courseId),
   };
 
 
@@ -382,8 +313,7 @@ const handleSubmit = async (e) => {
       address:"",
       phone:"",
       parentPhone:"",
-      departmentId:"",
-      courseId:""
+      departmentId:""
     });
 
 
@@ -418,21 +348,6 @@ Swal.fire(
 
 
 }
-
-// catch(error){
-
-//   console.log("FULL ERROR:", error);
-
-//   console.log("RESPONSE:", error.response?.data);
-//   console.log("Sending Data:", JSON.stringify(payload, null, 2));
-
-//   Swal.fire(
-//     "Error",
-//     error.response?.data?.message || error.message || "Something went wrong",
-//     "error"
-//   );
-
-// }
 
 finally{
 
@@ -1273,91 +1188,6 @@ value={d.id}
 
 
 
-
-
-
-
-{/* COURSE */}
-
-
-<div>
-
-
-<label className="font-semibold flex gap-2 items-center">
-
-
-<BookOpen size={20}/>
-
-Course
-
-
-</label>
-
-
-
-
-<select
-
-name="courseId"
-
-value={form.courseId}
-
-onChange={handleChange}
-
-className="
-w-full
-mt-2
-p-3
-rounded-xl
-border
-"
-
-
->
-
-
-<option value="">
-
-Select Course
-
-</option>
-
-
-{
-
-courses.map((c)=>(
-
-
-<option
-
-key={c.id}
-
-value={c.id}
-
->
-
-
-{c.courseName}
-
-
-</option>
-
-
-))
-
-
-}
-
-
-</select>
-
-
-</div>
-
-
-
-
-
 </div>
 
 
@@ -1524,11 +1354,6 @@ Department
 
 
 <th>
-Course
-</th>
-
-
-<th>
 Actions
 </th>
 
@@ -1555,7 +1380,7 @@ loading ?
 
 <td
 
-colSpan="8"
+colSpan="7"
 
 className="text-center p-6"
 
@@ -1684,13 +1509,6 @@ student.department
 </td>
 
 
-<td className="text-center">
-{
-student.course
-}
-</td>
-
-
 
 
 
@@ -1788,7 +1606,7 @@ transition
 
 <td
 
-colSpan="8"
+colSpan="7"
 
 className="text-center p-6"
 
@@ -1930,19 +1748,6 @@ text-sm
 {
 
 student.department?.name
-
-}
-
-</p>
-
-
-<p>
-
-<b>Course:</b>
-
-{
-
-student.course?.courseName
 
 }
 
